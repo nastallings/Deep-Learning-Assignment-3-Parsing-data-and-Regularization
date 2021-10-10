@@ -17,6 +17,7 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
+import matplotlib.pyplot as plt
 # fix random seed for reproducibility
 seed = 7
 numpy.random.seed(seed)
@@ -37,9 +38,7 @@ def create_model():
 	model = Sequential()
 	model.add(Dense(60, input_dim=60, init='normal', activation='selu', W_constraint=maxnorm(3)))
 	model.add(Dropout(0.2))
-	model.add(Dense(30, init='normal', activation='selu', W_constraint=maxnorm(3)))
-	model.add(Dropout(0.2))
-	model.add(Dense(30, init='normal', activation='selu', W_constraint=maxnorm(3)))
+	model.add(Dense(10, init='normal', activation='selu', W_constraint=maxnorm(3)))
 	model.add(Dropout(0.2))
 	model.add(Dense(1, init='normal', activation='sigmoid'))
 	# Compile model
@@ -56,3 +55,26 @@ kfold = StratifiedKFold(n_splits=15, shuffle=True, random_state=seed)
 kfold = kfold.split(X,encoded_Y)
 results = cross_val_score(pipeline, X, encoded_Y, cv=kfold)
 print("Hidden: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
+
+
+
+# summarize history for accuracy
+scalar = StandardScaler()
+X_scaled = scalar.fit_transform(X, encoded_Y)
+model = create_model()
+history = model.fit(X_scaled, encoded_Y, validation_split=0.33, nb_epoch=300, batch_size=12, verbose=0)
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+# summarize history for loss
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
