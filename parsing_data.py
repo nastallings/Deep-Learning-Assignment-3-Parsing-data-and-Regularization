@@ -2,10 +2,7 @@ import xml.etree.ElementTree as ET
 import cv2
 from zipfile import ZipFile
 import os
-import matplotlib.pyplot as plt
 
-# resize in opencv
-# create pickle file
 
 def parse_XML_file(filelocation):
     tree = ET.parse(filelocation)
