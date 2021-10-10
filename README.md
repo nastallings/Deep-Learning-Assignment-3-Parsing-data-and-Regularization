@@ -11,7 +11,7 @@ Due to size, the VOC PASCAL data set, the Intermediate_Data_Set, and the Interme
 
 To get the VOC PASCAL dataset, download it from: http://host.robots.ox.ac.uk/pascal/VOC/voc2012/#devkit
 The Intermediate_Data_Set and the Intermediate_Data_Set.zip can be obtained by running the code on the downloaded dataset. 
-Make sure to save the data under a Data folder in the project. See VOC_PASCAL_Hierarchy.png for an example.
+Make sure to extract the VOC PASCAL dataset to a folder called Data in the project directory. See VOC_PASCAL_Hierarchy.png for an example.
 
 
 
